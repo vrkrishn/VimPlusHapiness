@@ -19,6 +19,18 @@ int main(int argc, char* argv[])
 {
     Mat frame_orig, back, fore;
 
+    int SMILE_IN_A_ROW = 3;
+    int current = 0;
+
+    const char * thoughts[] = {"What a great coder", "I'm sure that will work", "What a boss", "Thats Amazing", "With code like that, who needs the rest of the team", "Isn't this code great"};
+    srand(time(NULL));
+    int index = rand() % 7;
+    cout << "GET READY FOR THE GOOD FEELS!!!" << endl;
+    cout << thoughts[index] << endl;
+
+    cout << "SMILE for " << SMILE_IN_A_ROW << " seconds" << endl;
+
+
     VideoCapture cap;
     cap.open(0);
 
@@ -37,9 +49,6 @@ int main(int argc, char* argv[])
     }
 
     int keyboard = 0;
-
-    int SMILE_IN_A_ROW = 3;
-    int current = 0;
 
     int i = 0;
     while((char) keyboard != 27)
@@ -68,6 +77,7 @@ int main(int argc, char* argv[])
 
         resize(frame, frame, sz);
 
+        ellipse(frame, Point(frame.rows/2, frame.cols/3), Size(2*frame.rows/3, frame.cols/4),0.0, 0.0, 0.0, Scalar(0,255,255), 2);
         imshow("Frame", frame);
         if (i % 10 == 0)
         {
@@ -78,13 +88,12 @@ int main(int argc, char* argv[])
                 if (current <= SMILE_IN_A_ROW)
                     cout << "Smile for " << SMILE_IN_A_ROW-current << " more seconds" << endl;
             } else {
-                current = 0;
                 cout << "You frowned start over" << endl;
+                current = 0;
             }
 
             if (current > SMILE_IN_A_ROW)
             {
-                cout << "Good Job" << endl;
                 break;
             }
         }
